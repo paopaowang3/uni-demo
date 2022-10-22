@@ -14,10 +14,19 @@
             
         }
         ,{
-            "path" : "pages/info/info",
+            "path" : "pages/amuse/amuse",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "沙雕图",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/info/info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
             
@@ -38,9 +47,9 @@
 				"selectedIconPath": "static/sort-active.png"
 			},{
 				"text": "沙雕图",
-				"pagePath": "pages/info/info",
-				"iconPath": "static/info.png",
-				"selectedIconPath": "static/info-actve.png"
+				"pagePath": "pages/amuse/amuse",
+				"iconPath": "static/amuse.png",
+				"selectedIconPath": "static/amuse-actve.png"
 			}
     	]
     },

@@ -6,8 +6,12 @@ module.exports = {
 	async query(e) {
 		const db = uniCloud.database()
 		let {data} = await db.collection(e).get()
-		
 		// 返回结果
+		return data
+	},
+	async listDetails(e,f) {
+		const db = uniCloud.database()
+		let {data} = await db.collection(e).where({index:f}).get()
 		return data
 	}
 	

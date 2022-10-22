@@ -1,5 +1,5 @@
 {
-    "name" : "uniapp",
+    "name" : "uni-demo",
     "appid" : "__UNI__618A9AB",
     "description" : "",
     "versionName" : "1.0.0",
@@ -49,7 +49,6 @@
     "quickapp" : {},
     /* 快应用特有相关 */
     "mp-weixin" : {
-        /* 小程序特有相关 */
         "appid" : "wxaa7159d999b280d4",
         "setting" : {
             "urlCheck" : false

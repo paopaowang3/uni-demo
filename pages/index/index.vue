@@ -33,6 +33,7 @@
 <script setup>
 	import {
 		getCurrentInstance,
+		onBeforeMount,
 		reactive
 	} from "vue";
 
@@ -41,16 +42,21 @@
 		proxy
 	} = getCurrentInstance()
 	let swiper = reactive([])
-	proxy.$http.query("swiper").then(e => swiper.push(...e))
-
 	let minicon = reactive([])
-	proxy.$http.query("icon").then(e => minicon.push(...e))
+	
+	onBeforeMount(async ()=>{
+		let swiperData =await proxy.$http.query("swiper")
+		swiper.push(...swiperData)
+		let iconData = await proxy.$http.query("icon")
+		minicon.push(...iconData)
+	})
+
+	
 	
 	
 	let change =(e)=>{
-	
-		uni.switchTab({
-			url:"/pages/sort/sort"
+		uni.reLaunch({
+			url:"/pages/sort/sort?id="+e.detail.index
 		})
 	} 
 		
