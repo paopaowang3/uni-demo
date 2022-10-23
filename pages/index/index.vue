@@ -2,7 +2,7 @@
 	<view>
 		<view class="top-swiper">
 			<swiper class="swiper" :autoplay="true" :circular="true">
-				<swiper-item v-for="item in swiper" :key="item.name">
+				<swiper-item v-for="item in counter.swiperList" :key="item.name">
 					<view class="swiper-item">
 						<image class="item-img" :src="item.url"></image>
 					</view>
@@ -10,15 +10,9 @@
 			</swiper>
 		</view>
 		
-		
-	
 		<view class="center-icon">
-		<!-- 	<view class="icon-item" v-for="item in minicon" :key="item._id">
-				<image class="icon-img" :src="item.url"></image>
-				<text>{{item.name}}</text>
-			</view> -->
 			<uni-grid :column="4" :showBorder="false" @change="change">
-				<uni-grid-item class="uni-grid-item" v-for="item in minicon" :key="item._id" :index="item.index">
+				<uni-grid-item class="uni-grid-item" v-for="item in counter.iconList" :key="item._id" :index="item.index">
 					<view class="icon-item">
 						<image class="icon-img" :src="item.url"></image>
 						<text>{{item.name}}</text>
@@ -26,37 +20,19 @@
 				</uni-grid-item>
 			</uni-grid>
 		</view>
-
 	</view>
 </template>
 
 <script setup>
-	import {
-		getCurrentInstance,
-		onBeforeMount,
-		reactive
-	} from "vue";
 
 	
-	const {
-		proxy
-	} = getCurrentInstance()
-	let swiper = reactive([])
-	let minicon = reactive([])
-	
-	onBeforeMount(async ()=>{
-		let swiperData =await proxy.$http.query("swiper")
-		swiper.push(...swiperData)
-		let iconData = await proxy.$http.query("icon")
-		minicon.push(...iconData)
-	})
+import { useCounterStore } from "../../store/counter";
+const counter = useCounterStore();
 
-	
-	
-	
 	let change =(e)=>{
-		uni.reLaunch({
-			url:"/pages/sort/sort?id="+e.detail.index
+		counter.upactive(e.detail.index)
+		uni.switchTab({
+			url:"/pages/sort/sort"
 		})
 	} 
 		

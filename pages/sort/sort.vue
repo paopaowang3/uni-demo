@@ -1,69 +1,32 @@
 <template>
 	<view class="nav-tabbar">
-     <scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">
-          <view :class="['scroll-view-item_H',i==navindex?'navactive':'']" v-for="(item,i) in minicon" :key="item.index" @click="navClick(i)">
-          	{{item.name}}
+     <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%">
+          <view :class="['scroll-view-item_H',i==counter.sortActive?'navactive':'']" v-for="(item,i) in counter.tatileNameList" :key="i" @click="navClick(i)">
+          	{{item}}
           </view>
         </scroll-view>
 	</view>
 	<view class="sort-list">
 		<uni-list >
-			<uni-list-item v-for="item in goodlist" :title="item.title" clickable @click="goodlistTo(item.index)" :key="item._id" ></uni-list-item>
+			<uni-list-item v-for="item in counter.sortList[counter.sortActive]" :title="item.title" clickable @click="goodlistTo(item.index)" :key="item._id" ></uni-list-item>
 		</uni-list>
 	</view>
 </template>
 
-<script setup>
-	import {
-		getCurrentInstance,
-		onBeforeMount,
-		reactive,
-		ref,
-		watch
-	} from "vue";
+<script setup>	
+	import { useCounterStore } from "../../store/counter";
+	const counter = useCounterStore();
 	
-	// 设置点击下标
-	const navindex = ref(0)
 	const navClick = (e) => {
-		navindex.value=e
+		counter.upactive(e)
 	}
-
-	// 接受首页传递参数设置下标
-	const props = defineProps({
-		id: {
-		type: Number,
-		default: 0
-		}
-	})
-	navindex.value=props.id
 	
-	// 获取标题已经列表数据
-	const {
-		proxy
-	} = getCurrentInstance()
-	const minicon = reactive([])
-	const goodlist = reactive([])
-	onBeforeMount(async ()=>{
-		let iconData = await proxy.$http.query("icon")
-		minicon.push(...iconData)
-		
-		watch(navindex,async ()=>{
-			let goodlistData = await proxy.$http.query(minicon[navindex.value].name)
-			goodlist.splice(0,goodlist.length,...goodlistData)
-			
-		},{immediate:true})
-	})
-
 	const goodlistTo = (e) => {
 		uni.navigateTo({
-		url:`/pages/info/info?id=${minicon[navindex.value].name}&index=${e}`
+		url:`/pages/info/info?index=${e}`
 		})
 	}
 
-
-	
-	
-	
 </script>
 
 <style lang="less">
